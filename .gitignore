@@ -1,0 +1,34 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# PyInstaller / Build Artifacts
+build/
+dist/
+*.spec
+
+# Keep main standalone executable tracked for direct download, ignore other executables
+*.exe
+!Lenovo_LOQ_Backlight_Customizer.exe
+
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Editor & IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Windows & System Files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Logs & Temporary files
+*.log

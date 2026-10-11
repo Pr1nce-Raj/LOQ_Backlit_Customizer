@@ -1,0 +1,11 @@
+{
+    "shortcut": "ctrl+shift+l",
+    "shortcut_action": "toggle",
+    "effect": "Off",
+    "speed": 0.5,
+    "power_saving_enabled": true,
+    "idle_timeout_seconds": 15,
+    "start_with_windows": true,
+    "start_minimized": true,
+    "minimize_to_tray": true
+}
