@@ -74,5 +74,38 @@ class TestConfig(unittest.TestCase):
         finally:
             config.CONFIG_PATH = orig_path
 
+    def test_appdata_config_paths(self):
+        cfg_dir = config.get_config_dir()
+        self.assertIn("LenovoLOQBacklightCustomizer", cfg_dir)
+        cfg_path = config.get_default_config_path()
+        self.assertTrue(cfg_path.endswith("backlight_config.json"))
+
+    def test_migration_from_local_config(self):
+        temp_dir = tempfile.mkdtemp()
+        orig_base = config.BASE_DIR
+        orig_path = config.CONFIG_PATH
+        try:
+            config.BASE_DIR = temp_dir
+            target_path = os.path.join(temp_dir, "migrated_config.json")
+            config.CONFIG_PATH = target_path
+
+            # Create an "old" local config in temp_dir
+            old_local = os.path.join(temp_dir, "backlight_config.json")
+            with open(old_local, "w", encoding="utf-8") as f:
+                json.dump({"effect": "Wave", "speed": 1.25}, f)
+
+            res = config.migrate_legacy_config()
+            self.assertTrue(res)
+            self.assertTrue(os.path.exists(target_path))
+            loaded = config.load_config()
+            self.assertEqual(loaded["effect"], "Wave")
+            self.assertEqual(loaded["speed"], 1.25)
+        finally:
+            config.BASE_DIR = orig_base
+            config.CONFIG_PATH = orig_path
+            for f in os.listdir(temp_dir):
+                os.remove(os.path.join(temp_dir, f))
+            os.rmdir(temp_dir)
+
 if __name__ == "__main__":
     unittest.main()

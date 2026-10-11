@@ -1,0 +1,29 @@
+{
+    "version": "1.0.1",
+    "description": "100% Offline keyboard backlight customizer with dynamic lighting animations and auto-sleep for Lenovo LOQ laptops",
+    "homepage": "https://github.com/Pr1nce-Raj/LOQ_Backlit_Customizer",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/Pr1nce-Raj/LOQ_Backlit_Customizer/releases/download/v1.0.1/Lenovo_LOQ_Backlight_Customizer.exe",
+            "hash": "ebf9d512777bdb66452f8990078902a055481e997e1c2466460fb04b7f5cadc2"
+        }
+    },
+    "bin": "Lenovo_LOQ_Backlight_Customizer.exe",
+    "shortcuts": [
+        [
+            "Lenovo_LOQ_Backlight_Customizer.exe",
+            "Tools\\Lenovo LOQ Backlight Customizer"
+        ]
+    ],
+    "checkver": {
+        "github": "https://github.com/Pr1nce-Raj/LOQ_Backlit_Customizer"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/Pr1nce-Raj/LOQ_Backlit_Customizer/releases/download/v$version/Lenovo_LOQ_Backlight_Customizer.exe"
+            }
+        }
+    }
+}

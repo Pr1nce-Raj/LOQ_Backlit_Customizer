@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>lenovo-loq-backlight-customizer</id>
+    <version>1.0.1</version>
+    <packageSourceUrl>https://github.com/Pr1nce-Raj/LOQ_Backlit_Customizer</packageSourceUrl>
+    <owners>Prince Raj</owners>
+    <title>Lenovo LOQ Backlight Customizer</title>
+    <authors>Prince Raj</authors>
+    <projectUrl>https://github.com/Pr1nce-Raj/LOQ_Backlit_Customizer</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/Pr1nce-Raj/LOQ_Backlit_Customizer/main/app_icon.ico</iconUrl>
+    <licenseUrl>https://github.com/Pr1nce-Raj/LOQ_Backlit_Customizer/blob/main/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectSourceUrl>https://github.com/Pr1nce-Raj/LOQ_Backlit_Customizer</projectSourceUrl>
+    <bugTrackerUrl>https://github.com/Pr1nce-Raj/LOQ_Backlit_Customizer/issues</bugTrackerUrl>
+    <tags>lenovo loq keyboard backlight rgb lighting utility offline</tags>
+    <summary>100% Offline keyboard backlight customizer with dynamic animations and auto-sleep for Lenovo LOQ laptops.</summary>
+    <description><![CDATA[Lenovo LOQ Backlight Customizer provides lightweight, software-level control over the keyboard backlight on Lenovo LOQ series laptops. Communicates directly with the hardware Embedded Controller via Lenovo's official ACPI Energy Management driver (`\\.\EnergyDrv`) without requiring heavy vendor background services. Features custom lighting modes (Breathing, Wave, Pulse, Flash, Static), customizable inactivity auto-sleep, and a global hotkey toggle.]]></description>
+    <releaseNotes>https://github.com/Pr1nce-Raj/LOQ_Backlit_Customizer/releases/tag/v1.0.1</releaseNotes>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>

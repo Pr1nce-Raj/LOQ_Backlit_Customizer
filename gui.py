@@ -1,3 +1,5 @@
+import os
+import sys
 import threading
 import time
 import customtkinter as ctk
@@ -43,6 +45,19 @@ class ModernBacklightGUI(ctk.CTk):
         self.geometry("640x780")
         self.minsize(580, 680)
         self.configure(fg_color=COLOR_BG)
+
+        # Set window icon if available
+        icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "app_icon.ico")
+        if getattr(sys, "frozen", False):
+            base_dir = getattr(sys, "_MEIPASS", os.path.dirname(sys.executable))
+            frozen_icon = os.path.join(base_dir, "app_icon.ico")
+            if os.path.exists(frozen_icon):
+                icon_path = frozen_icon
+        if os.path.exists(icon_path):
+            try:
+                self.iconbitmap(icon_path)
+            except Exception:
+                pass
 
         self._recording_hotkey = False
         self._current_hw_level = 0

@@ -8,7 +8,20 @@ if getattr(sys, "frozen", False):
 else:
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-CONFIG_PATH = os.path.join(BASE_DIR, "backlight_config.json")
+def get_config_dir():
+    """Return user configuration directory in %APPDATA%/LenovoLOQBacklightCustomizer."""
+    appdata = os.environ.get("APPDATA")
+    if appdata:
+        cfg_dir = os.path.join(appdata, "LenovoLOQBacklightCustomizer")
+    else:
+        cfg_dir = BASE_DIR
+    return cfg_dir
+
+def get_default_config_path():
+    """Return default configuration path in user AppData folder."""
+    return os.path.join(get_config_dir(), "backlight_config.json")
+
+CONFIG_PATH = get_default_config_path()
 APP_REG_NAME = "LenovoLOQBacklightCustomizer"
 
 DEFAULT_CONFIG = {
@@ -23,19 +36,38 @@ DEFAULT_CONFIG = {
     "minimize_to_tray": True
 }
 
+def migrate_legacy_config():
+    """Migrate legacy config from BASE_DIR to AppData CONFIG_PATH if present and not already migrated."""
+    if not os.path.exists(CONFIG_PATH):
+        local_candidate = os.path.join(BASE_DIR, "backlight_config.json")
+        if os.path.exists(local_candidate) and os.path.abspath(local_candidate) != os.path.abspath(CONFIG_PATH):
+            try:
+                with open(local_candidate, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                config = DEFAULT_CONFIG.copy()
+                config.update(data)
+                save_config(config)
+                return True
+            except Exception as e:
+                print(f"[Config] Migration error from local file: {e}")
+    return False
+
 def load_config():
     """Load configuration from disk with fallback to defaults; auto-creates if missing."""
     if not os.path.exists(CONFIG_PATH):
+        if CONFIG_PATH == get_default_config_path():
+            if migrate_legacy_config() and os.path.exists(CONFIG_PATH):
+                return load_config()
         cfg = DEFAULT_CONFIG.copy()
         save_config(cfg)
         return cfg
     try:
         with open(CONFIG_PATH, "r", encoding="utf-8") as f:
             data = json.load(f)
-            # Merge with defaults for any missing keys
-            config = DEFAULT_CONFIG.copy()
-            config.update(data)
-            return config
+        # Merge with defaults for any missing keys
+        config = DEFAULT_CONFIG.copy()
+        config.update(data)
+        return config
     except Exception as e:
         print(f"[Config] Error loading config: {e}. Using defaults.")
         return DEFAULT_CONFIG.copy()

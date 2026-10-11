@@ -1,0 +1,37 @@
+# UTF-8
+#
+# Version information for Lenovo LOQ Backlight Customizer Setup
+#
+VSVersionInfo(
+  ffi=FixedFileInfo(
+    filevers=(1, 0, 1, 0),
+    prodvers=(1, 0, 1, 0),
+    mask=0x3f,
+    flags=0x0,
+    OS=0x40004,
+    fileType=0x1,
+    subtype=0x0,
+    date=(0, 0)
+  ),
+  kids=[
+    StringFileInfo(
+      [
+        StringTable(
+          '040904b0',
+          [
+            StringStruct('CompanyName', 'Prince Raj'),
+            StringStruct('FileDescription', 'Lenovo LOQ Backlight Customizer Setup'),
+            StringStruct('FileVersion', '1.0.1.0'),
+            StringStruct('InternalName', 'LenovoLOQBacklightCustomizerSetup'),
+            StringStruct('LegalCopyright', 'Copyright (C) 2026 Prince Raj. Licensed under MIT.'),
+            StringStruct('OriginalFilename', 'Lenovo_LOQ_Backlight_Customizer_Setup.exe'),
+            StringStruct('ProductName', 'Lenovo LOQ Backlight Customizer Setup'),
+            StringStruct('ProductVersion', '1.0.1.0'),
+            StringStruct('Comments', 'Setup Wizard for Lenovo LOQ Backlight Customizer.')
+          ]
+        )
+      ]
+    ),
+    VarFileInfo([VarStruct('Translation', [1033, 1200])])
+  ]
+)

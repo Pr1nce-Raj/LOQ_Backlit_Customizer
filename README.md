@@ -1,120 +1,113 @@
-# Lenovo LOQ Keyboard Backlight Customizer & Inactivity Guard
+# Lenovo LOQ Backlight Customizer
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Platform: Windows 11 / 10](https://img.shields.io/badge/Platform-Windows%2011%20%7C%2010-0078d4.svg)](#-hardware-compatibility-check-before-downloading)
+[![Platform: Windows 11 / 10](https://img.shields.io/badge/Platform-Windows%2011%20%7C%2010-0078d4.svg)](#compatibility)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-brightgreen.svg)](requirements.txt)
-[![Download EXE](https://img.shields.io/badge/Download-Standalone%20.EXE-orange.svg)](https://github.com/Pr1nce-Raj/LOQ_Backlit_Customizer/releases)
+[![Download EXE](https://img.shields.io/badge/Download-Release%20Binaries-orange.svg)](https://github.com/Pr1nce-Raj/LOQ_Backlit_Customizer/releases)
 
-An ultra-modern, lightweight background utility designed specifically for **Lenovo LOQ** laptops to add dynamic lighting tricks (Breathing, Wave, Pulse, SOS), automatic battery-saving inactivity sleep, and conflict-free two-way synchronization with your laptop's physical keyboard controls.
+A lightweight Windows tray app that adds breathing/wave effects, custom hotkeys, and an auto-sleep timer to your Lenovo LOQ keyboard backlight — completely offline, with zero bloat.
 
 ---
 
-## ⚠️ Hardware Compatibility Check (Before Downloading)
+### Why this exists
 
-Please verify your laptop model before running this utility:
+If you own a Lenovo LOQ laptop, you already know the frustration:
+- The keyboard backlight only has Off, Low, and High via `Fn + Space`.
+- There is no idle sleep timer, so the backlight stays on even when you step away or watch a movie.
+- Lenovo Vantage is heavy, runs multiple background services, and still doesn't give you custom lighting effects.
 
-| Laptop Category | Status | Details |
+This tool talks directly to Lenovo's onboard ACPI driver (`\\.\EnergyDrv`) to give you smooth lighting animations and automatic idle sleep, running quietly in your system tray at virtually 0% CPU and ~30 MB RAM.
+
+---
+
+## Compatibility
+
+This app controls the standard **monochrome (white) backlight** used on Lenovo LOQ laptops:
+
+| Laptop | Supported? | Notes |
 | :--- | :---: | :--- |
-| **Lenovo LOQ (White Backlight)** | ✅ **Supported** | Tested on **LOQ 15IRX9 (83GS003NIN)**, compatible with 15IAX9, 15ARP9, 16IRH8, etc. |
-| **Lenovo IdeaPad Gaming (White)** | ✅ **Supported** | Models using the official Lenovo Energy Management driver (`\\.\EnergyDrv`). |
-| **Lenovo Legion (White 2-Stage)** | ✅ **Supported** | Models with standard 2-level white backlights. |
-| **Lenovo 4-Zone / Per-Key RGB** | ❌ **Unsupported** | RGB models use proprietary USB HID lighting controllers, not ACPI brightness IOCTL. |
-| **Other Brands (ASUS, HP, Dell, Acer)** | ❌ **Unsupported** | Other manufacturers use different motherboard controllers (ASUS WMI, AlienFX, OMEN). |
+| **Lenovo LOQ (White Backlight)** | Yes | Tested on LOQ 15IRX9 (83GS003NIN); works on 15IAX9, 15ARP9, 16IRH8, etc. |
+| **IdeaPad Gaming 3 (White)** | Yes | Any model using the Lenovo Energy Management driver (`\\.\EnergyDrv`). |
+| **Legion (White 2-stage)** | Yes | Standard 2-level white keyboard models. |
+| **4-Zone / Per-Key RGB Models** | No | RGB models use a proprietary USB HID controller, not ACPI brightness. |
+| **Other Brands (ASUS, HP, Dell)** | No | Other vendors use proprietary motherboard drivers (ASUS WMI, OMEN, AlienFX). |
 
 ---
 
-## 🎯 What to Expect When You Run It
+## How to Install
 
-- **100% Portable**: No installation wizard or administrator installer required. Just double-click the `.exe`.
-- **Zero Console Popups**: Built with native Windows GUI flags (`--noconsole`). No black terminal window flashes on your screen.
-- **Default Out-of-the-Box Setup**:
-  - Starts in smooth **Breathing mode** (relaxed 0.5x animation speed).
-  - **Inactivity Guard** is enabled by default with a **30-second timeout** (fully customizable from 5s to 120s).
-- **Runs in the Background**:
-  - Closing the dashboard with the **`X`** button minimizes the app to your **System Tray (Notification Area)** next to the clock.
-  - To completely exit the application, right-click the system tray icon and select **Exit**, or click **Quit App** in the dashboard.
-- **Smart Inactivity Guard & Instant Wake**:
-  - When you step away from your laptop, the backlight automatically turns off after your chosen inactivity timeout (customizable from 5s to 120s via the slider; default 30s) to conserve power and prolong LED lifespan.
-  - The instant you press **any key** or touch your **mouse / trackpad**, the backlight immediately wakes up and resumes your active mode!
-- **Conflict-Free with `Fn + Space`**:
-  - Pressing your laptop's physical `Fn + Space` or changing modes in **Lenovo Vantage** works seamlessly. If an animation is playing, the app yields instantly to your manual choice.
-- **Hardware Safe**:
-  - Operates purely in Windows user-space via Lenovo's official `\\.\EnergyDrv` driver interface. It does **not** flash firmware, touch UEFI/BIOS, or install kernel drivers.
+### Terminal (Fastest)
 
----
-
-## ⚡ Quick Download & Getting Started
-
-### Option 1: Standalone Executable (Recommended - No Python Required)
-1. Download **[`Lenovo_LOQ_Backlight_Customizer.exe`](Lenovo_LOQ_Backlight_Customizer.exe)** (available in the repo root or from [**GitHub Releases**](https://github.com/Pr1nce-Raj/LOQ_Backlit_Customizer/releases)).
-2. Double-click **`Lenovo_LOQ_Backlight_Customizer.exe`**.
-3. Select your favorite lighting mode, adjust the speed slider, or set a custom shortcut.
-4. Click **✔ Save & Apply All Settings**, then close or minimize the window!
-
-### Option 2: Run from Source Code (For Developers)
-1. Clone the repository:
-   ```powershell
-   git clone https://github.com/Pr1nce-Raj/LOQ_Backlit_Customizer.git
-   cd LOQ_Backlit_Customizer
-   ```
-2. Install Python dependencies:
-   ```powershell
-   pip install -r requirements.txt
-   ```
-3. Launch the app:
-   ```powershell
-   python Lenovo_LOQ_Backlight_Customizer.py
-   # Or run: Start_Backlight_Customizer.bat
-   ```
-
----
-
-## 🌟 Available Lighting Modes
-
-You can select any of these modes from the dashboard or directly by right-clicking the system tray icon:
-
-- 🌊 **Breathing**: Rhythmic, smooth illumination wave (`Off -> Low -> High -> Low -> Off`).
-- 💓 **Pulse**: Heartbeat double-pulse cadence.
-- 〰️ **Wave**: Continuous cascading illumination swell.
-- 🚨 **Police**: Rapid dual-burst emergency pattern.
-- 🆘 **SOS**: International Morse Code emergency pattern (`... --- ...`).
-- ⚡ **Blink x3**: Triple-flash cadence.
-- 💡 **Solid High**: 100% steady brightness.
-- 🔅 **Solid Low**: 50% steady brightness.
-- 🌑 **Off**: Backlight disabled.
-
----
-
-## ⌨️ Custom Global Shortcuts
-
-- Set any global keyboard shortcut (default: `Ctrl + Shift + L`).
-- Use the **● Record Keys** button in the dashboard to simply press your desired keys on the keyboard to bind them.
-- Choose shortcut behavior:
-  - **Toggle**: Turn active backlight/tricks On and Off.
-  - **Cycle**: Cycle through all lighting modes sequentially.
-
----
-
-## 🔨 Building the Executable from Source
-
-To compile the standalone binary yourself using PyInstaller:
+**WinGet** (built into Windows 10 & 11):
 ```powershell
-pip install -r requirements.txt
-pyinstaller --noconfirm --onefile --windowed --icon "app_icon.ico" --collect-all customtkinter --distpath . Lenovo_LOQ_Backlight_Customizer.py
+winget install PrinceRaj.LenovoLOQBacklightCustomizer
+```
+
+**Scoop**:
+```powershell
+scoop install https://raw.githubusercontent.com/Pr1nce-Raj/LOQ_Backlit_Customizer/main/scoop/lenovo-loq-backlight-customizer.json
+```
+
+**Chocolatey**:
+```powershell
+choco install lenovo-loq-backlight-customizer
 ```
 
 ---
 
-## 🧪 Automated Testing
+### Download the .exe
 
-The project includes an automated test suite covering IOCTL commands, thread safety, idle tracking, and mock drivers:
+Grab the latest release from the [Releases page](https://github.com/Pr1nce-Raj/LOQ_Backlit_Customizer/releases):
+
+- **Setup Wizard (`Lenovo_LOQ_Backlight_Customizer_Setup.exe`)**:
+  Recommended. Installs to your user folder (no admin prompt needed), lets you pick a custom directory with the Browse button, adds a Desktop shortcut, registers a clean uninstaller in Windows Settings / Control Panel, and groups shortcuts in your Start Menu under `Tools`.
+- **Portable (`Lenovo_LOQ_Backlight_Customizer.exe`)**:
+  No installation needed. Just drop it wherever you like and run it. Settings are saved to `%APPDATA%`, so it will never clutter your Downloads folder.
+
+#### Note on Windows SmartScreen ("Unknown Publisher")
+Because this is a free personal project and doesn't have an expensive corporate code-signing certificate ($400/year), Windows SmartScreen will show a blue *"Windows protected your PC"* prompt the first time you run it:
+1. Click **More info**.
+2. Click **Run anyway**.
+
+The app is 100% open-source, operates completely offline with zero telemetry, and you can inspect every line of Python in this repository. Over time, as more people download and run it, Windows SmartScreen will automatically build reputation for the file hash.
+
+---
+
+## Features & Usage
+
+- **Auto-Sleep / Inactivity Guard**: Set an idle timeout between 5s and 120s (default is 30s). When you stop typing or moving the mouse, the backlight turns off to save battery. The second you press any key or touch the trackpad, it instantly wakes up.
+- **Lighting Effects**:
+  - **Breathing**: Smooth fade between Off, Low, and High.
+  - **Wave**: Continuous light wave.
+  - **Pulse**: Double-pulse heartbeat flash.
+  - **Police & Blink**: Rapid flashing patterns.
+  - **SOS**: Morse code emergency sequence.
+  - **Solid High / Low**: Steady brightness without opening Vantage.
+- **Custom Hotkey**: Click **Record Keys** in the app to set any shortcut (default is `Ctrl + Shift + L`) to toggle or cycle modes from anywhere.
+- **Plays Nice with `Fn + Space`**: You can still use your physical `Fn + Space` key anytime. The app detects hardware changes and yields immediately without fighting the controller.
+- **System Tray**: Closing the window (`X`) minimizes to the system tray next to your clock. Right-click the tray icon to switch modes or exit.
+
+---
+
+## Running from Source
+
+If you want to run or modify the Python source directly:
+
+```powershell
+git clone https://github.com/Pr1nce-Raj/LOQ_Backlit_Customizer.git
+cd LOQ_Backlit_Customizer
+pip install -r requirements.txt
+python Lenovo_LOQ_Backlight_Customizer.py
+```
+
+To run the unit test suite:
 ```powershell
 python -m unittest discover -s tests
 ```
 
 ---
 
-## 📄 License & Disclaimer
+## License
 
-- **License**: Released under the [MIT License](LICENSE).
-- **Disclaimer**: This is an independent open-source utility developed for Lenovo LOQ laptop users and is not officially affiliated with or endorsed by Lenovo Group Limited.
+MIT License. See [LICENSE](LICENSE) for details.  
+*Disclaimer: Independent project made for Lenovo LOQ laptop users. Not affiliated with or endorsed by Lenovo.*
