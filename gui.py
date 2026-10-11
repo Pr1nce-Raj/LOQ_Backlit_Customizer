@@ -187,7 +187,7 @@ class ModernBacklightGUI(ctk.CTk):
         self.power_saving_var = ctk.BooleanVar(value=self.config.get("power_saving_enabled", True))
         self.switch_power = ctk.CTkSwitch(
             power_card,
-            text="Enable 30-Second Inactivity Guard",
+            text="Enable Inactivity Guard (Auto Sleep)",
             variable=self.power_saving_var,
             command=self._on_power_saving_toggle,
             progress_color=COLOR_ACCENT,

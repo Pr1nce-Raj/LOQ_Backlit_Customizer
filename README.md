@@ -29,13 +29,13 @@ Please verify your laptop model before running this utility:
 - **Zero Console Popups**: Built with native Windows GUI flags (`--noconsole`). No black terminal window flashes on your screen.
 - **Default Out-of-the-Box Setup**:
   - Starts in smooth **Breathing mode** (relaxed 0.5x animation speed).
-  - **Inactivity Guard** is enabled by default with a **30-second timeout**.
+  - **Inactivity Guard** is enabled by default with a **30-second timeout** (fully customizable from 5s to 120s).
 - **Runs in the Background**:
   - Closing the dashboard with the **`X`** button minimizes the app to your **System Tray (Notification Area)** next to the clock.
   - To completely exit the application, right-click the system tray icon and select **Exit**, or click **Quit App** in the dashboard.
-- **Smart Wake Technology**:
-  - When you step away for 30 seconds, the backlight turns off to save battery and prolong LED life.
-  - The instant you press **any key** or touch your **mouse / trackpad**, the backlight immediately turns back on.
+- **Smart Inactivity Guard & Instant Wake**:
+  - When you step away from your laptop, the backlight automatically turns off after your chosen inactivity timeout (customizable from 5s to 120s via the slider; default 30s) to conserve power and prolong LED lifespan.
+  - The instant you press **any key** or touch your **mouse / trackpad**, the backlight immediately wakes up and resumes your active mode!
 - **Conflict-Free with `Fn + Space`**:
   - Pressing your laptop's physical `Fn + Space` or changing modes in **Lenovo Vantage** works seamlessly. If an animation is playing, the app yields instantly to your manual choice.
 - **Hardware Safe**:
