@@ -26,7 +26,7 @@ This app controls the standard **monochrome (white) backlight** used on Lenovo L
 
 | Laptop | Supported? | Notes |
 | :--- | :---: | :--- |
-| **Lenovo LOQ (White Backlight)** | Yes | Tested on LOQ 15IRX9 (83GS003NIN); works on 15IAX9, 15ARP9, 16IRH8, etc. |
+| **Lenovo LOQ (White Backlight)** | Yes | Tested on LOQ 15IAX9 (83GS003NIN); works on 15IRX9, 15ARP9, 16IRH8, etc. |
 | **IdeaPad Gaming 3 (White)** | Yes | Any model using the Lenovo Energy Management driver (`\\.\EnergyDrv`). |
 | **Legion (White 2-stage)** | Yes | Standard 2-level white keyboard models. |
 | **4-Zone / Per-Key RGB Models** | No | RGB models use a proprietary USB HID controller, not ACPI brightness. |
