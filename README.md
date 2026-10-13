@@ -9,14 +9,20 @@ A lightweight Windows tray app that adds breathing/wave effects, custom hotkeys,
 
 ---
 
-### Why this exists
+### Backstory & Why I Built This
 
-If you own a Lenovo LOQ laptop, you already know the frustration:
-- The keyboard backlight only has Off, Low, and High via `Fn + Space`.
-- There is no idle sleep timer, so the backlight stays on even when you step away or watch a movie.
-- Lenovo Vantage is heavy, runs multiple background services, and still doesn't give you custom lighting effects.
+Around September 1st, I was talking to a friend about AI tools and what they could actually handle when it comes to real hardware. I decided to test it out on a problem on my own daily driver: a **Lenovo LOQ 15IAX9 (83GS003NIN, i5-12450HX, RTX 3050)**.
 
-This tool talks directly to Lenovo's onboard ACPI driver (`\\.\EnergyDrv`) to give you smooth lighting animations and automatic idle sleep, running quietly in your system tray at virtually 0% CPU and ~30 MB RAM.
+The keyboard only has a white backlight. You get Off, Low, and High with `Fn + Space`—that’s it. No timeout when you walk away, no breathing effect, and Lenovo Vantage doesn't offer anything for non-RGB models while eating up background RAM.
+
+I prompted Google Antigravity to build a customizer that could strobe and cycle lighting effects with a shortcut. The first prototype was terrible and barely worked, but I took the idea and spent the next month and a half (around a week of actual hands-on work) testing, debugging, and building it out:
+
+- Figured out how Lenovo's ACPI driver (`\\.\EnergyDrv`) talks to the keyboard so it works 100% offline without Vantage.
+- Wrote an animation loop that doesn't fight the laptop's physical `Fn + Space` key when pressed.
+- Added a simple idle tracker so the backlight turns off when you're not using the laptop.
+- Put together a dark GUI, tray menu, and installer.
+
+It's definitely not perfect—it needs some work here and there, and a few bits of fixes would help in the longer run, but it runs quietly in the tray and does what I need it to do.
 
 ---
 
