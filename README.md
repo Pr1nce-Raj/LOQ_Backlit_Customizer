@@ -45,6 +45,7 @@ This app controls the standard **monochrome (white) backlight** used on Lenovo L
 ### Terminal (Fastest)
 
 **WinGet** (built into Windows 10 & 11):
+> *Note: WinGet package is currently in final Microsoft community queue review ([PR #466885](https://github.com/microsoft/winget-pkgs/pull/466885)). If not yet indexed on your machine, please use Scoop or download the setup `.exe` directly below.*
 ```powershell
 winget install PrinceRaj.LenovoLOQBacklightCustomizer
 ```

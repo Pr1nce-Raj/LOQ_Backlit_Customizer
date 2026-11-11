@@ -122,3 +122,27 @@ The following are proposed checks; they were not run as part of this static revi
 ## Review limitations
 
 This is a static source review. The exact EnergyDrv protocol, target-model compatibility, actual Windows API behavior on the intended systems, and correspondence between the Python source and the 32 MB packaged executable remain unverified. Tests were not run, and the physical keyboard was not modified.
+
+---
+
+## Reassessment: 2026-10-12
+
+The source has changed since the initial review. This section checks the seven findings above against the current working tree. This was still a static inspection: no automated tests or hardware operations were run.
+
+| # | Finding | Current status | Evidence / remaining work |
+|---|---|---|---|
+| 1 | Driver reconnect lock deadlock | **Resolved in source** | `driver.py` now has `_connect_locked()` and calls it while already holding `_lock`, avoiding recursive acquisition of the non-reentrant lock. Driver reconnection behavior has not been exercised. |
+| 2 | Idle callback lock deadlock | **Resolved in source** | `IdleMonitor.set_enabled()`, `wake()`, and `_run_loop()` update transition state while locked, then invoke callbacks after releasing the lock. Callback re-entry has not been tested. |
+| 3 | Tk access from non-UI threads | **Partly resolved; thread-boundary risk remains** | GUI updates, mode/power state sync, and show/hide now route through `run_on_ui_thread()`. That helper itself calls `winfo_exists()` and `after()` from the caller's thread. This is commonly supported while Tk's main loop is running, but it still relies on cross-thread Tcl calls and needs stress verification, especially during startup/shutdown. A queue polled by the Tk main thread would provide a stricter boundary. |
+| 4 | Win32 API signatures and handle width | **Partly resolved; buffer passing needs review** | `driver.py` now declares `argtypes`/`restype`, uses `wintypes.HANDLE`, compares against `INVALID_HANDLE_VALUE`, and captures `GetLastError()`. However, `DeviceIoControl` declares its input buffer as `LPVOID` while callers pass a Python `bytes` object (`struct.pack(...)`). Confirm that this argument is accepted on the supported Python/Windows versions; the robust form is a ctypes-owned input buffer/pointer with the exact declared type. No actual 64-bit driver call was made, so handle and IOCTL behavior remain unverified. |
+| 5 | Save/startup/hotkey failures hidden | **Partly resolved** | `save_all_settings()` now returns structured errors, and the GUI displays a failure state. Startup registration and hotkey registration errors are included. However, follow-on `save_config()` calls in `set_mode()`, `set_speed()`, and `update_power_saving()` still ignore their results, and the hotkey replacement path removes the old registration before knowing that the new shortcut is valid. Consider propagating every operation result and retaining the previous working hotkey if registration fails. |
+| 6 | Runtime config differs from documented defaults | **Still present** | `config.py` defaults to Breathing / 30 seconds / startup disabled / foreground launch. The checked-in legacy `backlight_config.json` now says Off / 15 seconds / startup enabled / minimized. `migrate_legacy_config()` copies that file into AppData on first run when no AppData config exists, so the checked-in values can override the documented clean-install defaults. Decide whether this is intended seed configuration or user-specific state, then align packaging, migration, and README. |
+| 7 | Broad hardware compatibility/safety claims | **Partly addressed; verification/documentation remains** | The driver now logs unknown status codes and logs IOCTL failures, improving diagnostics. The README still states broad support for LOQ variants, IdeaPad Gaming 3, and white-backlight Legion models without a corresponding verification matrix in the repository; the IOCTL protocol and safety claims remain unverified by this review. Narrow claims to tested combinations and record the evidence. |
+
+### Current recommended next steps
+
+1. Fix or verify the ctypes `DeviceIoControl` input-buffer argument before treating the hardware boundary as repaired.
+2. Add deterministic tests for the driver reconnect path and idle callback re-entry; run a 64-bit Windows hardware check only on a supported device with restoration verified.
+3. Consider replacing cross-thread calls to `after()`/`winfo_exists()` with a thread-safe queue drained by the Tk main loop, then exercise tray/hotkey/sync activity during shutdown.
+4. Make `backlight_config.json`'s role explicit. Since migration imports it into AppData, it currently behaves as a first-run seed file, not merely harmless local runtime state.
+5. Keep the README's hardware compatibility and safety statements within the set of configurations actually tested.

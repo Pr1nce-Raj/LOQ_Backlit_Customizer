@@ -32,3 +32,7 @@ $RECYCLE.BIN/
 
 # Logs & Temporary files
 *.log
+
+# Internal notes & reviews
+DEVELOPER_REVIEW.md
+FUTURE_PLANS.md
